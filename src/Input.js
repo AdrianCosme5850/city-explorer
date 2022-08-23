@@ -7,7 +7,8 @@ class Input extends React.Component{
         super(props);
         this.state = {
         city: '',
-        cityInfo: []
+        cityInfo: [],
+        mapURL: '',
         }
     }
     handleChange = (event) => {
@@ -16,8 +17,8 @@ class Input extends React.Component{
     handleSubmit = async(event) => {
         event.preventDefault();
       let response = await axios.get(`https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`);
-      this.setState({cityInfo: response.data[0]});
-      console.log(response.data[0])
+      this.setState({cityInfo: response.data[0], mapURL: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${response.data[0].lat},${response.data[0].lon}&zoom=12`});
+      console.log(this.state.mapURL);
     }
 render(){
     return<>
@@ -33,6 +34,7 @@ render(){
         <li>{this.state.cityInfo.lat}</li>
         <li>{this.state.cityInfo.lon}</li>
     </ul>
+    <img src={this.state.mapURL} alt='Map'/>
     </>
 }
 }
