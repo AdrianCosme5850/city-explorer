@@ -6,26 +6,38 @@ class Weather extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            cityForecast: []
         }
     }
     handleSubmitWeather = async(event) => {
         event.preventDefault();
-        console.log(URL)
         let responseWeather = await axios.get(`http://${process.env.REACT_APP_SERVER}/weather?city=${this.props.city}`);
         this.setState({
             cityForecast: responseWeather.data,
         })
+    }
+    renderWeather = () => {
+        let weatherData = this.state.cityForecast.forEach((day) => {
+            return <ul>
+                <li>{day.date}</li>
+                <li>{day.description}</li>
+            </ul>
+           }
+        )
+        return weatherData;
     }
     render(){
         return<>
          <Form onSubmit={this.handleSubmitWeather}>
     <Button type="submit">Weather</Button>
     </Form>
-    <ul>
-     <li>{this.state.cityForecast.date}</li>
-     <li>{this.state.cityForecast.description}</li>
-    </ul>
+    {this.state.cityForecast && <ul>
+        <li>{this.state.cityForecast[0].date}</li>
+        <li>{this.state.cityForecast[0].description}</li>
+        <li>{this.state.cityForecast[1].date}</li>
+        <li>{this.state.cityForecast[1].description}</li>
+        <li>{this.state.cityForecast[2].date}</li>
+        <li>{this.state.cityForecast[2].description}</li>
+        </ul>} 
         </>
     }
 }
