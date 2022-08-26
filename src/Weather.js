@@ -10,7 +10,7 @@ class Weather extends React.Component {
     }
     handleSubmitWeather = async(event) => {
         event.preventDefault();
-        let responseWeather = await axios.get(`${process.env.REACT_APP_SERVER}/weather?city=${this.props.city}`);
+        let responseWeather = await axios.get(`${process.env.REACT_APP_SERVER}/weather?city=${this.props.city}&lat=${this.props.lat}&lon=${this.props.lon}`);
         this.setState({
             cityForecast: responseWeather.data,
         })
