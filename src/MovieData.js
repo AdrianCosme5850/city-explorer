@@ -11,13 +11,16 @@ class MovieData extends React.Component{
     }
     handleSubmit = async (event) =>{
         event.preventDefault();
-        let cityMovies = await axios.get(`http://${process.env.REACT_APP_SERVER}/movie?city=${this.props.city}`);
+        let cityMovies = await axios.get(`${process.env.REACT_APP_SERVER}/movie?city=${this.props.city}`);
         this.setState({cityMovies: cityMovies.data});
         console.log(cityMovies.data)
     }
     renderMovies = () => {
     let newArr = this.state.cityMovies.map((movie,idx) => {
-        return <li>{movie.title}</li>
+        return <>
+        <li>{movie.title}</li>
+        <img src={movie.poster} alt="movie poster"/>
+        </>
     });
     return newArr;
     }
