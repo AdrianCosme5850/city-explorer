@@ -41,6 +41,8 @@ render(){
     handleChange={this.handleChange}
     cityInfo={this.state.cityInfo}/>
     <Weather
+    lon={this.state.cityInfo.lon}
+    lat={this.state.cityInfo.lat}
     city={this.state.city}/>
     <img src={this.state.mapURL} alt='Map'/>
     <PopUp
