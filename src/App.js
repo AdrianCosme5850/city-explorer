@@ -4,6 +4,7 @@ import axios from 'axios';
 import PopUp from './PopUp.js';
 import CityInput from './CityInput.js';
 import MovieData from './MovieData.js';
+import Card from 'react-bootstrap/Card';
 class App extends React.Component{
     constructor(props){
         super(props);
@@ -11,7 +12,7 @@ class App extends React.Component{
         city: '',
         cityInfo: [],
         mapURL: '',
-        showModal: false,
+        cardShow: false,
         error: false,
         errorMessage: '',
         }
@@ -25,6 +26,7 @@ class App extends React.Component{
       this.setState({
         cityInfo: response.data[0],
         mapURL: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${response.data[0].lat},${response.data[0].lon}&zoom=12`,
+        cardShow: true,
     error: false, errorMessage: ''});
       console.log(this.state.mapURL);
      } catch(error){
@@ -38,19 +40,25 @@ render(){
     return<>
     <CityInput
     handleSubmitCity={this.handleSubmitCity}
-    handleChange={this.handleChange}
-    cityInfo={this.state.cityInfo}/>
+    handleChange={this.handleChange}/>
     <Weather
     lon={this.state.cityInfo.lon}
     lat={this.state.cityInfo.lat}
     city={this.state.city}/>
-    <img src={this.state.mapURL} alt='Map'/>
     <PopUp
     error={this.state.error}
     handleClose={this.handleClose}
     message={this.state.errorMessage}/>
     <MovieData
     city={this.state.city}/>
+    {this.state.cardShow === true && <Card style={{width: "18rem"}}>
+    <Card.Img src={this.state.mapURL} alt="Map of searched city."/>
+    <Card.Body>
+        <Card.Title>{this.state.cityInfo.display_name}</Card.Title>
+        <Card.Body>{this.state.cityInfo.display_name} has a lattitude of {this.state.cityInfo.lat} and
+        a longitude of {this.state.cityInfo.lon}</Card.Body>
+    </Card.Body>
+</Card>}
     </>
 }
 }
