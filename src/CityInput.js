@@ -12,11 +12,6 @@ render(){
     <Button type="submit">Explore!</Button>
     </Form.Group>
 </Form>
-    <h1>{this.props.cityInfo.display_name}</h1>
-<ul>
-    <li>{this.props.cityInfo.lat}</li>
-    <li>{this.props.cityInfo.lon}</li>
-</ul>
 </>
 }
 }
